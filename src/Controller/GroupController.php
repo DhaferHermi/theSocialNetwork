@@ -3,20 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Group;
+use App\Repository\GroupRepository;
 use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/group", name="group", methods={"GET","POST"})
+ */
+
 class GroupController extends AbstractController
 {
-    /**
-     * @Route("/group", name="group")
-     */
-    public function index(): Response
+    public function index(GroupRepository $GroupRepository): Response
     {
-        return $this->render('group/index.html.twig', [
-            'controller_name' => 'GroupController',
+        return $this->render('/index.html.twig', [
+            'Groups' => $GroupRepository->findAll(),
         ]);
     }
     /**
