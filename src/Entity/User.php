@@ -74,6 +74,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $publications;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo_url;
+
     public function __construct()
     {
         $this->publications = new ArrayCollection();
@@ -261,6 +266,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $publication->setUsrId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhotoUrl(): ?string
+    {
+        return $this->photo_url;
+    }
+
+    public function setPhotoUrl(?string $photo_url): self
+    {
+        $this->photo_url = $photo_url;
 
         return $this;
     }
