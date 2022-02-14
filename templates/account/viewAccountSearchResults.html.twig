@@ -24,6 +24,25 @@
         <td>{{ user.gender }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.phone }}</td>
+        <td>
+            {% for userb in user.userb %}
+                {% if userb.usera == app.user %}
+                    {% if userb.status=='pending' %}
+                        {{ userb.status }}
+                    {% elseif userb.status=='friends' %}
+                        {{ userb.status }}
+                    {% else %}
+                        <a href="">add</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+
+
+
+        </td>
+
+
     </tr>
 
     {% endfor %}
