@@ -37,7 +37,7 @@ class PublicationController extends AbstractController
         $publication = $em->getRepository(Publication::class)->findAll();
 
         return $this->render('publication/index.html.twig', [
-            'ListPublications' => $publication ,'User'=>$this->getUser()->getUsername() , 'user_Id' => $this->getUser()->getUserIdentifier()
+            'ListPublications' => $publication ,'User'=>$this->getUser()->getUsername() , 'user_Id' => $this->getUser()->getUserIdentifier() , 'userImage'=>$this->getUser()->getPhotoUrl()
         ]);
     }
 

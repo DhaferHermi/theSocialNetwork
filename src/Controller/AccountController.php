@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,6 +29,20 @@ class AccountController extends AbstractController
 
         if ($editForm->isSubmitted() and $editForm->isValid()){
             $editData=$editForm->getData();
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $editForm['imageFile']->getData();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            $nameImage=$uploadedFile->getClientOriginalName();
+
+            $uploadedFile->move(
+                $destination,
+                $uploadedFile->getClientOriginalName()
+            );
+
+
+
+            $editData->setPhotoUrl($nameImage);
+
             $em->persist($editData);
             $em->flush();
             return $this->redirectToRoute('viewAccount');

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -35,6 +36,21 @@ class RegistrationController extends AbstractController
 
             // Set their role
             $user->setRoles(['ROLE_USER']);
+
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['imageFile']->getData();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            $nameImage=$uploadedFile->getClientOriginalName();
+
+            $uploadedFile->move(
+                $destination,
+                $uploadedFile->getClientOriginalName()
+            );
+
+
+
+            $user->setPhotoUrl($nameImage);
 
             // Save
             $em = $this->getDoctrine()->getManager();
