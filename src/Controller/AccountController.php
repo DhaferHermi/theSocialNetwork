@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\FriendStatus;
+use App\Entity\User;
 use App\Form\UserEditType;
 use App\Form\UserType;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -94,11 +97,37 @@ class AccountController extends AbstractController
     public function viewAccountSearchResults(Request $request,$keyword): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository("App\Entity\User")->findBy(array('lastname'=>$keyword));
-        $users = array_merge( $users,$em->getRepository("App\Entity\User")->findBy(array('firstname'=>$keyword)));
-        $users = array_merge( $users,$em->getRepository("App\Entity\User")->findBy(array('username'=>$keyword)));
+        $criteria = new Criteria();
+        $criteria
+            ->orWhere($criteria->expr()->contains('lastname', $keyword))
+            ->orWhere($criteria->expr()->contains('firstname', $keyword))
+            ->orWhere($criteria->expr()->contains('username', $keyword))
+            ->andWhere($criteria->expr()->neq('id',$this->getUser()->getUserIdentifier()));
+        $users = $em->getRepository(User::class)->matching($criteria) ;
+
+
+
+
         return $this->render('account/viewAccountSearchResults.html.twig', [
             'users'=>$users
         ]);
+    }
+
+    /**
+     * @Route("/addfriend/{id}", name="addfriend")
+     */
+    public function addfriend(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository("App\Entity\User")->find($id);
+        $friendStatus = new friendStatus();
+        $friendStatus->setUserA($this->getUser());
+        $friendStatus->setUserB($user);
+        $friendStatus->setStatus('pending');
+
+        $em->persist($friendStatus);
+        $em->flush();
+
+         return $this->redirectToRoute('home');
     }
 }
