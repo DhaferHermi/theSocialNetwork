@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Group{% endblock %}
+
+{% block body %}
+    <h1>Group</h1>
+
+    <table class="table">
+        <tbody>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ Group.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ Group.name }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{Group.date |date }}</td>
+            </tr>
+            <tr>
+                <th>List</th>
+                <td>{{ Group.list }}</td>
+            </tr>
+            </tbody>
+        </table>
+        </tbody>
+    </table>
+
+
+{% endblock %}
