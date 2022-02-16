@@ -75,6 +75,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $publications;
 
     /**
+
      * @ORM\OneToMany(targetEntity=FriendStatus::class, mappedBy="UserA")
      */
     private $userA;
@@ -83,6 +84,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=FriendStatus::class, mappedBy="UserB")
      */
     private $UserB;
+
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo_url;
+
 
     public function __construct()
     {
@@ -278,6 +284,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
     /**
      * @return Collection|FriendStatus[]
      */
@@ -334,6 +341,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userB->setUserB(null);
             }
         }
+
+    public function getPhotoUrl(): ?string
+    {
+        return $this->photo_url;
+    }
+
+    public function setPhotoUrl(?string $photo_url): self
+    {
+        $this->photo_url = $photo_url;
+
 
         return $this;
     }
