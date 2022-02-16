@@ -29,17 +29,14 @@
                 {% if userb.usera == app.user %}
                     {% if userb.status=='pending' %}
                         {{ userb.status }}
-                    {% elseif userb.status=='friends' %}
+                    {% endif %}
+                    {% if userb.status=='friends' %}
                         {{ userb.status }}
-                    {% else %}
-                        <a href="">add</a>
                     {% endif %}
                 {% endif %}
+            {% else %}
+                    <a href="{{ path("addfriend",{'id':user.id}) }}">add</a>
             {% endfor %}
-
-
-
-
         </td>
 
 
