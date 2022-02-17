@@ -23,7 +23,41 @@
         <td>{{ user.birthday | date }}</td>
         <td>{{ user.gender }}</td>
         <td>{{ user.email }}</td>
-        <td>{{ user.phone }}</td>
+        <td>{{ user.phone }}    </td>
+        <td>
+
+            {% for userb in user.userb %}
+
+
+
+                {% if userb.usera == app.user %}
+                    {% if userb.status=='pending' %}
+                        {{ userb.status }}
+
+
+                    {% endif %}
+                    {% if userb.status=='friends' %}
+                        {{ userb.status }}
+                    {% endif %}
+
+
+
+
+                {% endif %}
+
+            {% else %}
+                <a href="{{ path("addfriend",{'id':user.id}) }}">add</a>
+
+            {% endfor %}
+
+
+
+
+
+
+        </td>
+
+
     </tr>
 
     {% endfor %}
