@@ -35,13 +35,10 @@
                     {% endif %}
                 {% endif %}
             {% else %}
-                    <a href="{{ path("addfriend",{'id':user.id}) }}">add</a>
+                  <a href="{{ path("addfriend",{'id':user.id}) }}">add</a>
             {% endfor %}
         </td>
-
-
     </tr>
-
     {% endfor %}
 </Table>
 {% endblock %}

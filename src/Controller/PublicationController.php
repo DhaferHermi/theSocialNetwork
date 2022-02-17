@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\FriendStatus;
 use App\Entity\Publication;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,15 +31,16 @@ class PublicationController extends AbstractController
 
 
 
-        $query = $em->createQuery('SELECT p FROM App\Entity\Publication p WHERE p.usr_Id = :num ')
-            ->setParameter('num', $this->getUser()->getUserIdentifier());
+
 
 
 
         $publication = $em->getRepository(Publication::class)->findAll();
 
+
         return $this->render('publication/index.html.twig', [
-            'ListPublications' => $publication ,'User'=>$this->getUser()->getUsername() , 'user_Id' => $this->getUser()->getUserIdentifier() , 'userImage'=>$this->getUser()->getPhotoUrl()
+            'ListPublications' => $publication
+
         ]);
     }
 
