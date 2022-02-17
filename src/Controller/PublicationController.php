@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
 use App\Entity\FriendStatus;
 use App\Entity\Publication;
 use App\Entity\User;
+use App\Form\CommentaireType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,17 +27,31 @@ class PublicationController extends AbstractController
     /**
      * @Route("/publication", name="publication")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $em= $this->getDoctrine()->getManager();
 
+        $Commentaire = new Commentaire();
+        $formCommentaire = $this->createForm(CommentaireType::class, $Commentaire);
 
+        $formCommentaire->handleRequest($request);
+        if($formCommentaire->isSubmitted() and $formCommentaire->isValid()){
+
+            $publicationCommentaire = $em->getRepository("App\Entity\Publication")->find($_POST['pub']);
+            $Commentaire->setText($_POST['text']);
+            $Commentaire->setPublication($publicationCommentaire);
+            $Commentaire->setUser($this->getUser());
+            $em->persist($Commentaire);
+            $em->flush();
+
+            return $this->redirectToRoute('publication');
+        }
 
         $publication = $em->getRepository(Publication::class)->findAll();
 
 
         return $this->render('publication/index.html.twig', [
-            'ListPublications' => $publication
+            'ListPublications' => $publication,  'formCommentaire'=>$formCommentaire->createView()
 
         ]);
     }

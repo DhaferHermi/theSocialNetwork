@@ -22,14 +22,10 @@
 
                 <div class="feed p-2">
 
-
-
                     {% for m in ListPublications %}
-
                         {% for friends in app.user.userA %}
                         {% if m.getUsrId().id == friends.userB.getId()  and friends.getStatus() =='friends'     %}
                     <div class="bg-white border mt-2" >
-
                         <div>
                             <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                                 <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="{{ asset('../../../../uploads/'~m.getUsrId().getPhotoUrl()) }}" width="45">
@@ -38,9 +34,28 @@
                             </div>
                         </div>
                         <div class="p-2 px-3"><span>{{ m.publication }}.</span></div>
-
                         <div   class="feed-image p-2 px-2" ><img    style="height: 300px" class="img-fluid img-responsive" src="{{ asset('../../../../uploads/'~ m.getPhotoUrl() )}}" ></div>
-                        <div class="d-flex justify-content-end socials p-2 py-3"></div>
+
+
+                        {{ form_start(formCommentaire) }}
+                        <div class="p-2 px-2">
+                            <span>Commentaire</span>
+                            <input type="text"  name="text"  class="col-md-12" >
+                            <input type="hidden" value="{{ m.getId() }}" name="pub">
+                            <button type="submit" class="btn btn-primary" style="margin-top: 15px ; margin-left: 500px;">
+                                ajouterCommentaire
+                            </button>
+                        </div>
+                        {{ form_end(formCommentaire) }}
+
+                        <div class="p-2 px-2">
+                            {% for c in m.Commentaires %}
+
+                                {{ c.Text }}
+
+                            {% endfor %}
+                        </div>
+
                     </div>
                         {% endif %}
                     {% endfor %}
@@ -53,16 +68,29 @@
                                         </div>
 
                                             <div class="feed-icon px-2"><a href="{{ path("PublicationDelete", {'id': m.id}) }}"><i class="fa fa-trash "style='color: red ; margin-right: 10px'  ></i></a> <a href="{{ path("PublicationUpdate", {'id': m.id}) }}"> <i class="fa fa-pencil" style='color: orange'></i></a></div>
-
                                     </div>
                                 </div>
                                 <div class="p-2 px-3"><span>{{ m.publication }}.</span></div>
-
                                 <div class="feed-image p-2 px-2"><img    style="height: 300px"  class="img-fluid img-responsive" src="{{ asset('../../../../uploads/'~ m.getPhotoUrl() )}}"></div>
-                                <div class="d-flex justify-content-end socials p-2 py-3"></div>
+                                {{ form_start(formCommentaire) }}
+                                <div class="p-2 px-2">
+                                    <span>Commentaire</span>
+                                    <input type="text"  name="text"  class="col-md-12" >
+                                    <input type="hidden" value="{{ m.getId() }}" name="pub">
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 15px ; margin-left: 500px;">
+                                        ajouterCommentaire
+                                    </button>
+                                </div>
+                                <div class="p-2 px-2">
+                                    {% for c in m.Commentaires %}
+
+                                        {{ c.Text }}
+
+                                    {% endfor %}
+                                </div>
+                                {{ form_end(formCommentaire) }}
                             </div>
                         {% endif %}
-
                     {% endfor %}
                 </div>
 

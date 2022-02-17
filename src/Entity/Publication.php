@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PublicationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,16 @@ class Publication
      * @ORM\Column(type="datetime")
      */
     private $date_Creation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="publication")
+     */
+    private $Commentaires;
+
+    public function __construct()
+    {
+        $this->Commentaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +99,36 @@ class Publication
     public function setDateCreation(\DateTimeInterface $date_Creation): self
     {
         $this->date_Creation = $date_Creation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->Commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->Commentaires->contains($commentaire)) {
+            $this->Commentaires[] = $commentaire;
+            $commentaire->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->Commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getPublication() === $this) {
+                $commentaire->setPublication(null);
+            }
+        }
 
         return $this;
     }
