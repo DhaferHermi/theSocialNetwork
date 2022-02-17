@@ -22,4 +22,35 @@ class FriendsController extends AbstractController
             'friends' => $friends,
         ]);
     }
+
+    /**
+     * @Route("/acceptfriend/{id}", name="acceptfriend")
+     */
+    public function acceptFriend($id): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $friendStatus = $em->getRepository(FriendStatus::class)->find($id);
+        $friendStatus->setStatus("friends");
+        $em->persist($friendStatus);
+        $em->flush();
+        return $this->render('friends/index.html.twig', [
+
+
+        ]);
+    }
+
+    /**
+     * @Route("/rejectfriend/{id}", name="rejectfriend")
+     */
+    public function rejectFriend($id): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $friendStatus = $em->getRepository(FriendStatus::class)->find($id);
+        $em->remove($friendStatus);
+        $em->flush();
+        return $this->render('friends/index.html.twig', [
+
+
+        ]);
+    }
 }
