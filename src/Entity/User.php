@@ -84,7 +84,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=FriendStatus::class, mappedBy="UserB")
      */
     private $UserB;
-/**
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photo_url;
@@ -341,6 +342,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userB->setUserB(null);
             }
         }
+        return $this ;
+    }
 
         return $this;
     }
