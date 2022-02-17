@@ -31,10 +31,6 @@ class PublicationController extends AbstractController
 
 
 
-
-
-
-
         $publication = $em->getRepository(Publication::class)->findAll();
 
 
