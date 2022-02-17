@@ -26,4 +26,9 @@
     </tr>
 
 </Table>
+
+    {% for usera in user.userA %}
+        {{ usera.id }}
+        {{ usera.status }}
+    {% endfor %}
 {% endblock %}

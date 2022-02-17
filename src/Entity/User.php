@@ -75,13 +75,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $publications;
 
     /**
+
+     * @ORM\OneToMany(targetEntity=FriendStatus::class, mappedBy="UserA")
+     */
+    private $userA;
+
+    /**
+     * @ORM\OneToMany(targetEntity=FriendStatus::class, mappedBy="UserB")
+     */
+    private $UserB;
+
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photo_url;
 
+
     public function __construct()
     {
         $this->publications = new ArrayCollection();
+
+        $this->userA = new ArrayCollection();
+        $this->UserB = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -270,6 +284,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    /**
+     * @return Collection|FriendStatus[]
+     */
+    public function getUserA(): Collection
+    {
+        return $this->userA;
+    }
+
+    public function addUserA(FriendStatus $userA): self
+    {
+        if (!$this->userA->contains($userA)) {
+            $this->userA[] = $userA;
+            $userA->setUserA($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserA(FriendStatus $userA): self
+    {
+        if ($this->userA->removeElement($userA)) {
+            // set the owning side to null (unless already changed)
+            if ($userA->getUserA() === $this) {
+                $userA->setUserA(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FriendStatus[]
+     */
+    public function getUserB(): Collection
+    {
+        return $this->UserB;
+    }
+
+    public function addUserB(FriendStatus $userB): self
+    {
+        if (!$this->UserB->contains($userB)) {
+            $this->UserB[] = $userB;
+            $userB->setUserB($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserB(FriendStatus $userB): self
+    {
+        if ($this->UserB->removeElement($userB)) {
+            // set the owning side to null (unless already changed)
+            if ($userB->getUserB() === $this) {
+                $userB->setUserB(null);
+            }
+        }
+
     public function getPhotoUrl(): ?string
     {
         return $this->photo_url;
@@ -278,6 +350,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhotoUrl(?string $photo_url): self
     {
         $this->photo_url = $photo_url;
+
 
         return $this;
     }

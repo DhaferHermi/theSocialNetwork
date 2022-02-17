@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client index{% endblock %}
+
+{% block body %}
+    <h1>Group</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>titre</th>
+            <th>Date</th>
+            <th>List</th>
+            <th>role</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for Group in Groups %}
+            <tr>
+                <td>{{Group.id}}</td>
+                <td>{{Group.titre}}</td>
+                <td>{{Group.date |date }}</td>
+                <td>{{Group.list}}</td>
+                <td>{{Group.role}}</td>
+                <td>
+                    <a href="{{ path('Group_show', {'id': Group.id}) }}">show</a>
+                    <a href="{{ path('group_edit', {'id': Group.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('Group_new') }}">Create new</a>
+{% endblock %}
