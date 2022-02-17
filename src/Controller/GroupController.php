@@ -9,18 +9,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
  * @Route("/group", name="group", methods={"GET","POST"})
  */
 
 class GroupController extends AbstractController
 {
-    public function index(GroupRepository $GroupRepository): Response
+
+
+    /**
+     * @Route("/group", name="group")
+     */
+    public function index(): Response
     {
+        $em= $this->getDoctrine()->getManager();
+        $group = $em->getRepository(Group::class)->findAll();
         return $this->render('/index.html.twig', [
-            'Groups' => $GroupRepository->findAll(),
+            'Groups' => $group
         ]);
     }
+
+
     /**
      * @Route("/new", name="Group_new", methods={"GET","POST"})
      */
@@ -49,7 +59,7 @@ class GroupController extends AbstractController
     public function show(Group  $Group): Response
     {
         return $this->render('Group/show.html.twig', [
-            'Group' => $Group,
+            'Group' => $Group
         ]);
     }
 
