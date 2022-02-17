@@ -16,21 +16,24 @@
             <td>user</td>
             <td>Status</td>
         </tr>
-        {% for friend in friends %}
-            {% if friend.Status=='pending' %}
-                <tr style="background-color: #5eb5e0">
-                    <td>{{ friend.UserB.Username }}</td>
-                    <td>{{ friend.Status }}</td>
-                </tr>
-            {% endif %}
-            {% if friend.Status=='friends' %}
-                <tr style="background-color: darkolivegreen">
-                    <td>{{ friend.id }}</td>
-                    <td>{{ friend.UserA.Id }}</td>
-                    <td>{{ friend.UserB.Id }}</td>
-                    <td>{{ friend.Status }}</td>
-                </tr>
-            {% endif %}
+        {% for friend in app.user.userA %}
+            <tr>
+                <td>{{ friend.userb.username }}</td>
+                <td>{{ friend.status }}</td>
+            </tr>
+        {% endfor %}
+        {% for friend in app.user.userB %}
+            <tr>
+                <td>{{ friend.usera.username }}</td>
+                <td>
+                    {% if friend.status=='pending' %}
+                        <a href="{{ path("acceptfriend",{'id':friend.id}) }}">accept</a>
+                        <a href="{{ path("rejectfriend",{'id':friend.id}) }}">reject</a>
+                    {% else %}
+                        {{ friend.status }}
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
     </Table>
 </div>

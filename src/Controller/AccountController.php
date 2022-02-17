@@ -128,6 +128,6 @@ class AccountController extends AbstractController
         $em->persist($friendStatus);
         $em->flush();
 
-         return $this->redirectToRoute('home');
+         return $this->redirectToRoute('friends');
     }
 }
