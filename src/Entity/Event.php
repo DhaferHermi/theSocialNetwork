@@ -37,6 +37,12 @@ class Event
      */
     private $date_fin;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,18 @@ class Event
     public function setDateFin(\DateTimeInterface $date_fin): self
     {
         $this->date_fin = $date_fin;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

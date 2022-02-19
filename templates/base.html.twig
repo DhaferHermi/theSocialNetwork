@@ -6,6 +6,7 @@
 
 
         {% block cssPublication %}
+
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" />
 
@@ -33,6 +34,130 @@
         width: 100%;
         height: auto
         }
+        <!--calendar-->
+            ul {list-style-type: none;}
+            body {font-family: Verdana, sans-serif;}
+
+            .month {
+                padding: 70px 25px;
+                width: 100%;
+                background: #1abc9c;
+                text-align: center;
+            }
+
+            .month ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            .month ul li {
+                color: white;
+                font-size: 20px;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+            }
+
+            .month .prev {
+                float: left;
+                padding-top: 10px;
+            }
+
+            .month .next {
+                float: right;
+                padding-top: 10px;
+            }
+
+            .weekdays {
+                margin: 0;
+                padding: 10px 0;
+                background-color: #ddd;
+            }
+
+            .weekdays li {
+                display: inline-block;
+                width: 12.6%;
+                color: #666;
+                text-align: center;
+            }
+
+            .days {
+                padding: 10px 0;
+                background: #eee;
+                margin: 0;
+            }
+
+            .days li {
+                list-style-type: none;
+                display: inline-block;
+                width: 13.6%;
+                text-align: center;
+                margin-bottom: 5px;
+                font-size:12px;
+                color: #777;
+            }
+
+            .days li .active {
+                padding: 5px;
+                background: #1abc9c;
+                color: white !important
+            }
+            .event{
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                background-color: white;
+                padding: 20px;
+                border-radius: 20px;
+            }
+            .titreEvent{
+                color:dodgerblue;
+                margin: 30px 0px 30px;
+                border-bottom: #666666 3px solid;
+                width: auto;
+            }
+            .right{
+                float: right;
+                font-size: small;
+                color:grey;
+                font-weight: bold;
+            }
+            a:hover{
+                opacity:0.7
+            }
+            .Fright{
+               float:right;
+                margin: 10px;
+            }
+            .actions{
+                float: right;
+                margin-bottom: 20px;
+            }
+            .actions i {
+                color:darkolivegreen;
+            }
+            .container{
+                margin-top:50px ;
+            }
+            #event input, textarea{
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                width: 100%;
+                border: aqua 2px solid;
+                border-radius: 8px;
+                margin:20px;
+                padding: 10px;
+            }
+            #event_date_deb select {
+                border: aqua 2px solid;
+                border-radius: 8px;
+                margin:15px;
+            }
+            #event_date_fin select {
+                border: aqua 2px solid;
+                border-radius: 8px;
+                margin:15px;
+            }
+            #event label{
+                font-size: 20px;
+                margin:20px;
+            }
     </style>
         {% endblock %}
         {# Run `composer require symfony/webpack-encore-bundle`
@@ -58,4 +183,5 @@
         {% block body %}
         {% endblock %}
     </body>
+
 </html>

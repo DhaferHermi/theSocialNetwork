@@ -36,6 +36,7 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $event->setUser($this->getUser());
             $entityManager->persist($event);
             $entityManager->flush();
 
@@ -89,5 +90,12 @@ class EventController extends AbstractController
         }
 
         return $this->redirectToRoute('event_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/calendar", name="event_calendar", methods={"GET"})
+     */
+    public function calendar(): Response
+    {
+        return $this->render('event/calendar.html.twig');
     }
 }
