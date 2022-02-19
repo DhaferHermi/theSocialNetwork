@@ -90,6 +90,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $photo_url;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $events;
+
 
     public function __construct()
     {
@@ -97,6 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $this->userA = new ArrayCollection();
         $this->UserB = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -345,8 +351,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this ;
     }
 
-        return $this;
-    }
 
     public function getPhotoUrl(): ?string
     {
@@ -357,6 +361,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->photo_url = $photo_url;
 
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getUser() === $this) {
+                $event->setUser(null);
+            }
+        }
 
         return $this;
     }
